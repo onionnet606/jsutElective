@@ -2,32 +2,42 @@ import requests                     # 网页访问
 import json
 import re
 import time
+import os
 import random
+import platform
 
 import prettytable as pt
 
 # 监控列表
 monitorList = {
-	'(2019-2020-2)-X000620-9000000044-1': '艺术哲学：美是如何诞生的',
-    '(2019-2020-2)-X000427-9000000044-1': '美学原理',
+    # 智慧树
     '(2019-2020-2)-X000603-9000000255-1': '大学生创业概论与实践',
-    '(2019-2020-2)-X000611-9000000044-1': '艺术鉴赏',
+    # 尔雅
+	# '(2019-2020-2)-X000620-9000000044-1': '艺术哲学：美是如何诞生的',
+    # 尔雅
+    # '(2019-2020-2)-X000427-9000000044-1': '美学原理',
+    # 尔雅
+    # '(2019-2020-2)-X000611-9000000044-1': '艺术鉴赏',
+    # 智慧树
     '(2019-2020-2)-X000615-9000000255-1': '美学与人生',
-
+    # 中博财商
+    # '(2019-2020-2)-X000607-9000000318-1': '财商教育案例分享',
 }
 
 # 需要操作学生ID
 student_ID = '2018144137'
 
 # 刷新时间
-refreshTime_UP = 4
+refreshTime_UP = 3
 refreshTime_DOWN = 1
 
 # 单个重复尝试次数
-repeatTimes = 5
+repeatTimes = 2
 
 # ServerChan token
 SERVERCHAN = r'SCU55917T9ef597b4983f7e463b88fb69ffae48635d369d95561fd'
+# WXF
+# SERVERCHAN = r'SCU62071T34ad4620284f6ede9dc90c5f066ef60d5d8853e4a8860'
 
 class getCourse:
     '''
@@ -173,7 +183,7 @@ def sendMsg(courseName):
 	# 标题内容替换
     title = courseName + '课程可选了！'
 	# 替换内容
-    content = courseName + '目前可以选了！ | 时间' + time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
+    content = courseName + '目前可以选了！| 学号' + student_ID + ' | 时间' + time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
 	
 	# 网页参数提交
     data = "?text=" + title + "&desp=" + content
@@ -186,11 +196,40 @@ def sendMsg(courseName):
     if send_req['errmsg'] != 'success':
         print('推送失败！')
 
+def clearScreen():
+    sys = platform.system()
+    if sys == "Windows":
+        os.system('cls')
+    elif sys == "Linux":
+        os.system('clear')
+        pass
+
+
 # 新建类
 course_Class = getCourse(student_ID,monitorList)
 
+# table_fields = ['学号', '课程名称', '学分']
+# tb = pt.PrettyTable(table_fields)
+# tb.padding_width = 1  # One space between column edges and contents (default)
+#
+#
+# os.system('cls')
+#
+# for id in range(2018144101,2018144141):
+#     course = course_Class.getSelectedCourse(id)
+#     if len(course) <= 0:
+#         tb.add_row([id, "Null", 0])
+#     else:
+#         course = course[0]
+#         tb.add_row([id, course['课程名称'], course['学分']])
+#     os.system('cls')
+#     print(tb)
+#     time.sleep(1)
+# input()
+
+
+
 while(1):
-    print('刷新时间：' + time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()),'学号：',student_ID)
     # 遍历可选课程
     allCourse = course_Class.getcourse()
     if len(allCourse) <= 0:
@@ -198,7 +237,7 @@ while(1):
         time.sleep(random.randint(refreshTime_DOWN,refreshTime_UP))
         continue
 
-    table_fields = ['课程名称', '学分', '教师姓名', '已选人数']
+    table_fields = ['课程名称', '学分', '教师姓名', '已选人数', '总人数']
     tb = pt.PrettyTable(table_fields)
 
     tb.padding_width = 1  # One space between column edges and contents (default)
@@ -209,12 +248,14 @@ while(1):
             row_.append(course[field])
         tb.add_row(row_)
 
+    clearScreen()
+    print('刷新时间：' + time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()), '学号：', student_ID)
     print(tb)
     for course in allCourse:
         tryTimes = 0
         if(course_Class.wantCourse(course['选课课号'])):
             if(course_Class.isAlreadyChoose() == False):
-                sendMsg("正在处理课程：" + course['课程名称'])
+                print("正在处理课程：" + course['课程名称'])
                 # 没有选上想要的课
                 # 二话不说，先选为敬
                 tryTimes += 1
@@ -230,7 +271,8 @@ while(1):
                     sendMsg("抢课成功！" + course['课程名称'])
                 else:
                     print(course['课程名称'] + ' | 抢课失败...')
-                    sendMsg("抢课失败！" + course['课程名称'])
             else:
                 print(course['课程名称'] + ' | 已经抢到自动忽略...')
-    time.sleep(random.randint(refreshTime_DOWN,refreshTime_UP))
+    t = random.randint(refreshTime_DOWN,refreshTime_UP)
+    print("结束轮询，延时:",t)
+    time.sleep(t)

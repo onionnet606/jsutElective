@@ -2,9 +2,10 @@ from flask import *
 from lib.JSUTCourse import JSUTCourse
 from lib.Utils import util
 import json
+from flask_cors import *
 
 app = Flask(__name__,static_folder='templates/dist')
-
+CORS(app, supports_credentials=True)
 # 拟合
 @app.route('/CourseList',methods=["GET"])
 def getCourseList():
@@ -26,7 +27,6 @@ def getCourseList():
 @app.route('/selectedCourse',methods=["GET"])
 def getSelectedCourse():
     stuID = request.args.get("stuid",default=util.student_id)
-    print(stuID)
     stu = JSUTCourse(stuID, [])
     course = stu.get_selected_courses_full()
     return json.dumps({

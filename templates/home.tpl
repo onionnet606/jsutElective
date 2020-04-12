@@ -96,7 +96,7 @@
 
 
 
-<script src="dist/layui/layui.js"></script>
+<script src="dist/layui/layui.all.js"></script>
 <script>
 
 
@@ -104,7 +104,8 @@
         var layer = layui.layer
             ,form = layui.form
             ,table = layui.table
-            ,$ = layui.$;
+            ,$ = layui.$
+	        ,element = layui.element;
 
         table.render({
             elem: '#CourseList'

@@ -6,7 +6,7 @@ import requests  # 网页访问
 
 class JSUTCourse:
     """
-    抢课类，可以获取课程列表、获取已选课程、抢课、退课
+    抢课类，可以获取课程列表、获取已选课程、抢课
     """
 
     def __init__(self, _student_id, monitor_list):
@@ -162,14 +162,6 @@ class JSUTCourse:
         print("{} | 选课结果：{}".format(course_name if course_name is not None else course_id, result['msg']))
 
         return result
-
-    def withdraw_course(self, course_id):
-        """退课接口"""
-        url = r'http://xuanke.qian-xue.com/course/TuiXuan?callback=course&xh={student_id}&xkkh={course_id}'.format(
-            student_id=self.student_id, course_id=course_id)
-
-        # result = self._getWebContent(url)
-        return None
 
     def already_choose(self, course_id=None):
         '''判断选好的课是否在列表内，couser_ID如果提供，则判断course_ID是否已选'''

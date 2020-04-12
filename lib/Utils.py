@@ -7,11 +7,11 @@ import os
 class Utils:
     def __init__(self,option):
         self.option = option
-        self.refresh_time_down  = option['refresh_time_down']
-        self.refresh_time_up    = option['refresh_time_up']
+        self.refresh_time_down  = int(option['refresh_time_down'])
+        self.refresh_time_up    = int(option['refresh_time_up'])
         self.SERVERCHAN    = option['serverchan'] if option['serverchan'] != "" else None
         self.student_id    = option['student_id']
-        self.repeatTimes   = option['repeatTimes']
+        self.repeatTimes   = int(option['repeatTimes'])
         self.nameReplace = {
             'refresh_time_down' : '最小刷新时间',
             'refresh_time_up'   : '最大刷新时间',

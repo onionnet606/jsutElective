@@ -1,13 +1,9 @@
 from flask import *
-from flask_cors import *
 from lib.JSUTCourse import JSUTCourse
 from lib.Utils import util
 import json
 
-
 app = Flask(__name__,static_folder='templates/dist')
-# 测试用，线上环境去掉，跨域支持
-CORS(app, supports_credentials=True)
 
 # 拟合
 @app.route('/CourseList',methods=["GET"])

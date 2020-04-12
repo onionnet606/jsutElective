@@ -1,0 +1,4 @@
+requests==2.22.0
+Flask==1.1.1
+Flask-Cors==3.0.8
+prettytable==0.7.2

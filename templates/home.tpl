@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-	<title>开始使用layui</title>
+	<title>JSUT - 选课助手</title>
 	<link rel="stylesheet" href="dist/layui/css/layui.css">
 </head>
 <body style="background-color: #eaeaea">

@@ -4,7 +4,7 @@ from lib.Utils import util
 import json
 from flask_cors import *
 
-app = Flask(__name__,static_folder='templates/dist')
+app = Flask(__name__)
 CORS(app, supports_credentials=True)
 # 拟合
 @app.route('/CourseList',methods=["GET"])

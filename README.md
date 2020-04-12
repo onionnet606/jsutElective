@@ -141,9 +141,6 @@ http://sc.ftqq.com/3.version
 
 若有其他问题，直接提Issues。
 
-
-
-
 ## 选课号获取方法
 
 1. 进入教务系统，选课列表（一般提前一天会公布）
@@ -151,3 +148,6 @@ http://sc.ftqq.com/3.version
 3. 查看元素的`onclick`值，里面的`xkkh`就是了
 
 ![image-20200408222825539](img/image-20200408222825539.png)
+
+## 感谢
+感谢[@Chuck](https://github.com/fanck0605)的整理及开发帮助

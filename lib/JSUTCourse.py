@@ -157,9 +157,11 @@ class JSUTCourse:
         """选课"""
         url = r'http://xuanke.qian-xue.com/course/XuanKe?callback=course&xh={student_ID}&xkkh={course_ID}&jcyd=1'.format(
             student_ID=self.student_id, course_ID=course_id)
-
-        result = self.__get_web_content(url)
-        print("{} | 选课结果：{}".format(course_name if course_name is not None else course_id, result['msg']))
+        try:
+            result = self.__get_web_content(url)
+            print("{} | 选课结果：{}".format(course_name if course_name is not None else course_id, result['msg']))
+        except:
+            print("{} | 选课失败，请检查选课课号是否正确".format(course_name if course_name is not None else course_id))
 
         return result
 
